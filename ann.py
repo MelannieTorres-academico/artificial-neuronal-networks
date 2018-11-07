@@ -1,9 +1,9 @@
 import fileinput
 
 def main():
-    # example input
     file_input = fileinput.input()
     training_set = []
+    test_set = []
 
     d = int(file_input[0])
     m_size = int(file_input[1])
@@ -15,7 +15,7 @@ def main():
         #separate in dimensions d
 
     for i in range(n_size):
-        training_set.append(file_input[i+3+m_size])
+        test_set.append(file_input[i+3+m_size])
         #separate in dimensions d
 
 
