@@ -12,42 +12,38 @@ def ann_training(d, l_rate, x_train_set, y_train_set, x_test_set):
     weights = initialize_weights(d + 1)
     error = 1
     num_iterations = 0
-    while (error > 0 and num_iterations < 100000):
-        acum = 0
+    while (error > 0 and num_iterations < 1000):
         error = 0
         num_iterations = num_iterations+1
         for key in range(0, len(x_train_set)):
+            acum = 0
             for i in range(0, len(x_train_set[key])):
-                acum += x_train_set[key][i]*weights[i]
-
+                acum += x_train_set[key][i] * weights[i]
             if(acum >= 0):
                 y_hat = 1
             else:
                 y_hat = 0
 
-            y_difference = y_train_set[key]-y_hat
-            if(y_difference!= 0):
-                error = error+1
-            delta_w = (y_train_set[key]-y_hat)*l_rate*x_train_set[key][i]
-            weights[i] = weights[i] + delta_w
+            y_difference = y_train_set[key] - y_hat
+            if (y_difference != 0):
+                error += 1
 
-    if(error!=0):
+            for j in range(0, len(weights)):
+                delta_w = (y_train_set[key]-y_hat) * l_rate * x_train_set[key][j]
+                weights[j] += delta_w
+
+    if (error != 0):
         print("no solution found")
     else:
         for key in range(0, len(x_test_set)):
             acum = 0
             for i in range(0, len(x_test_set[key])):
-                acum += x_test_set[key][i]*weights[i]
-            if(acum >= 0):
+                acum += x_test_set[key][i] * weights[i]
+            if (acum >= 0):
                 y_hat = 1
             else:
                 y_hat = 0
             print( y_hat)
-
-
-
-
-
 
 
 def main():
