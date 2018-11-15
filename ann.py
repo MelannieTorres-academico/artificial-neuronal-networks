@@ -1,5 +1,6 @@
 import fileinput
 from random import random
+# import matplotlib.pyplot as plt
 
 def initialize_weights(num_weights):
     weights = []
@@ -34,16 +35,20 @@ def ann_training(d, l_rate, x_train_set, y_train_set, x_test_set):
 
     if (error != 0):
         print("no solution found")
+        return []
     else:
+        result = []
         for key in range(0, len(x_test_set)):
             acum = 0
             for i in range(0, len(x_test_set[key])):
                 acum += x_test_set[key][i] * weights[i]
-            if (acum >= 0):
+            if acum >= 0:
                 y_hat = 1
             else:
                 y_hat = 0
-            print( y_hat)
+            print(y_hat)
+            result.append(y_hat)
+        return result
 
 
 def main():
@@ -73,7 +78,31 @@ def main():
         x_test_row.append(1.0)
         x_test_set.append(x_test_row)
 
-    ann_training(d, l_rate, x_training_set, y_training_set, x_test_set)
+    x_training_set_col_1 = [item[0] for item in x_training_set]
+    x_training_set_col_2 = [item[1] for item in x_training_set]
+
+    x_test_set_col_1 = [item[0] for item in x_test_set]
+    x_test_set_col_2 = [item[1] for item in x_test_set]
+
+    y_test_set = ann_training(d, l_rate, x_training_set, y_training_set, x_test_set)
+
+    # plotting code:
+    # plt.figure(1)
+    # for i in range(0, len(x_training_set_col_1)):
+    #     if y_training_set[i] == 0:
+    #         plt.scatter(x_training_set_col_1[i], x_training_set_col_2[i], c='r')
+    #     else:
+    #         plt.scatter(x_training_set_col_1[i], x_training_set_col_2[i], c='b')
+    # plt.title('Train Dataset')
+    #
+    # plt.figure(2)
+    # for i in range(0, len(x_test_set_col_1)):
+    #     if y_test_set[i] == 0:
+    #         plt.scatter(x_test_set_col_1[i], x_test_set_col_2[i], c='r')
+    #     else:
+    #         plt.scatter(x_test_set_col_1[i], x_test_set_col_2[i], c='b')
+    # plt.title('Test Dataset')
+    # plt.show()
 
 
 
